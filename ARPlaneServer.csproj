@@ -4,12 +4,22 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>DarkRift Server %28.NET Framework%29\Plugins</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>DarkRift Server %28.NET Framework%29\Plugins</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DarkRift">
       <HintPath>DarkRift Server %28.NET Framework%29\Lib\DarkRift.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="DarkRift.Server">
       <HintPath>DarkRift Server %28.NET Framework%29\Lib\DarkRift.Server.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
 </Project>
