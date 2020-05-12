@@ -32,7 +32,6 @@ public class TestPlugin : Plugin
     {
         print($"client connected {e.Client.ID}");
         var craft = new Craft();
-        crafts.Add(e.Client, craft);
 
         using (DarkRiftWriter writer = DarkRiftWriter.Create())
         {
@@ -45,6 +44,28 @@ public class TestPlugin : Plugin
                     client.SendMessage(message, SendMode.Reliable);
                 }
             }
+
+            using (DarkRiftWriter otherCraftWriter = DarkRiftWriter.Create())
+            {
+                // Tell the client who was already in the game
+                foreach (Craft otherCraft in crafts.Values) 
+                {
+                    writer.Write(e.Client.ID);
+                    writer.Write(otherCraft.posX);
+                    writer.Write(otherCraft.posY);
+                    writer.Write(otherCraft.posZ);
+                    writer.Write(otherCraft.rotX);
+                    writer.Write(otherCraft.rotY);
+                    writer.Write(otherCraft.rotZ);
+                }
+
+                using (Message playerMessage = Message.Create(Tags.SpawnCraft, otherCraftWriter))
+                {
+                    e.Client.SendMessage(playerMessage, SendMode.Reliable);
+                }
+            }
+            crafts.Add(e.Client, craft);
+
         }
 
         e.Client.MessageReceived += ClientMessageReceived;
