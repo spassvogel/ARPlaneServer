@@ -39,6 +39,7 @@ public class TestPlugin : Plugin
 
             using (Message message = Message.Create(Tags.SpawnCraft, writer))
             {
+                // Tell the other clients someone new has joined
                 foreach (IClient client in ClientManager.GetAllClients().Where(x => x != e.Client))
                 {
                     client.SendMessage(message, SendMode.Reliable);
@@ -50,13 +51,7 @@ public class TestPlugin : Plugin
                 // Tell the client who was already in the game
                 foreach (Craft otherCraft in crafts.Values) 
                 {
-                    writer.Write(e.Client.ID);
-                    writer.Write(otherCraft.posX);
-                    writer.Write(otherCraft.posY);
-                    writer.Write(otherCraft.posZ);
-                    writer.Write(otherCraft.rotX);
-                    writer.Write(otherCraft.rotY);
-                    writer.Write(otherCraft.rotZ);
+                    otherCraftWriter.Write(e.Client.ID);
                 }
 
                 using (Message playerMessage = Message.Create(Tags.SpawnCraft, otherCraftWriter))
