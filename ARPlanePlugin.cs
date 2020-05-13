@@ -32,9 +32,8 @@ namespace ARPlaneServer {
         public ARPlanePlugin(PluginLoadData pluginLoadData) : base(pluginLoadData) {
             ClientManager.ClientConnected += ClientConnected;
             ClientManager.ClientDisconnected += ClientDisconnected;
-
-            
         }
+
         public override bool ThreadSafe => false;
         public override Version Version => new Version(1, 0, 0);
 
@@ -48,7 +47,13 @@ namespace ARPlaneServer {
         }
 
         void ClientMessageReceived(object sender, MessageReceivedEventArgs e) {
-            // TODO
+            using (Message message = e.GetMessage() as Message) {
+                using (DarkRiftReader reader = message.GetReader()) {
+                    if (message.Tag == Tags.UpdateTransform) {
+                        // TODO: simple message relay from reader to writer
+                    }
+                }
+            }
         }
 
         void InitializeClient(IClient client) {
@@ -63,12 +68,7 @@ namespace ARPlaneServer {
         void SendSpawnCraft(IClient client) {
             using (DarkRiftWriter writer = DarkRiftWriter.Create()) {
                 writer.Write(client.ID);
-
-                using (Message message = Message.Create(Tags.SpawnCraft, writer)) {
-                    foreach (IClient otherClient in ClientManager.GetAllClients().Where(x => x != client)) {
-                        otherClient.SendMessage(message, SendMode.Reliable);
-                    }
-                }
+                SendToOthers(Tags.SpawnCraft, writer, client);
             }
         }
 
@@ -81,14 +81,29 @@ namespace ARPlaneServer {
                     WriteVector3(writer, otherCraft.rotation);
                 }
 
+                SendToClient(Tags.SpawnCraft, writer, client);
                 using (Message playerMessage = Message.Create(Tags.SpawnCraft, writer)) {
                     client.SendMessage(playerMessage, SendMode.Reliable);
                 }
             }
         }
 
+        void SendToClient(ushort tag, DarkRiftWriter writer, IClient client) {
+            using (Message playerMessage = Message.Create(tag, writer)) {
+                client.SendMessage(playerMessage, SendMode.Reliable);
+            }
+        }
+
+        void SendToOthers(ushort tag, DarkRiftWriter writer, IClient client) {
+            using (Message message = Message.Create(tag, writer)) {
+                foreach (IClient otherClient in ClientManager.GetAllClients().Where(x => x != client)) {
+                    otherClient.SendMessage(message, SendMode.Reliable);
+                }
+            }
+        }
+
         // Debugging
-        private void Print(string message) {
+        void Print(string message) {
             WriteEvent(message, LogType.Info);
         }
     }
