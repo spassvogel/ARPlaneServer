@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ARPlaneServer.Events {
-    class SpawnOtherCraftsEvent : NetworkEvent, IDarkRiftSerializable {
-        public IEnumerable<ARCraft> otherCrafts;
+    class PlayerStatesEvent : NetworkEvent {
+        public IEnumerable<Player> players;
 
         public override void Deserialize(DeserializeEvent e) {
-            otherCrafts = e.Reader.ReadSerializables<ARCraft>();
+            players = e.Reader.ReadSerializables<Player>();
         }
 
         public override void Serialize(SerializeEvent e) {
-            e.Writer.Write(otherCrafts.ToArray());
+            e.Writer.Write(players.ToArray());
         }
     }
 }

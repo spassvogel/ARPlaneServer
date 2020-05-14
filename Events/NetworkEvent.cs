@@ -1,7 +1,4 @@
 ﻿using DarkRift;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ARPlaneServer.Events {
     public abstract class NetworkEvent : IDarkRiftSerializable {

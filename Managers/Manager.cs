@@ -38,10 +38,5 @@ namespace ARPlaneServer.Managers {
                 }
             }
         }
-
-        // Debugging
-        protected void Print(string message) {
-            WriteEvent(message, LogType.Info);
-        }
     }
 }
