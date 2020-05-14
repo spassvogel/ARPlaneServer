@@ -4,7 +4,7 @@
 
 ```
 $ cd "DarkRift Server (.NET Framework)"
-$`mono DarkRift.Server.Console.exe
+$ mono DarkRift.Server.Console.exe
 ```
 
 This will use the plugins in the `Plugins` folder.
