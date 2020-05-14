@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ExtensionMethods;
 
 namespace ARPlaneServer {
     class ARPlanePlugin : Plugin {
@@ -13,11 +14,6 @@ namespace ARPlaneServer {
             public Vector3 rotation;
         }
 
-        private static void WriteVector3(DarkRiftWriter writer, Vector3 vector) {
-            writer.Write(vector.x);
-            writer.Write(vector.y);
-            writer.Write(vector.z);
-        }
 
         private static Vector3 ReadVector3(DarkRiftReader reader) {
             return new Vector3(
@@ -77,8 +73,8 @@ namespace ARPlaneServer {
             using (DarkRiftWriter writer = DarkRiftWriter.Create()) {
                 foreach (Craft otherCraft in crafts.Values) {
                     writer.Write(client.ID);
-                    WriteVector3(writer, otherCraft.position);
-                    WriteVector3(writer, otherCraft.rotation);
+                    writer.Write(otherCraft.position);
+                    writer.Write(otherCraft.rotation);
                 }
 
                 SendToClient(Tags.SpawnCraft, writer, client);
