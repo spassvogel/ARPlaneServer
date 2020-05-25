@@ -23,7 +23,7 @@ namespace ARPlaneServer.Classes {
         public void Serialize(SerializeEvent e) {
             e.Writer.Write(id);
             e.Writer.Write(ownerID);
-            e.Writer.Write(type)
+            e.Writer.Write(type);
             e.Writer.Write(position);
             e.Writer.Write(rotation);
         }
