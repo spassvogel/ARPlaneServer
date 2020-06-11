@@ -15,7 +15,7 @@ namespace ARPlaneServer.Classes {
 
         public void Serialize(SerializeEvent e) {
             e.Writer.Write(id);
-            e.Writer.Write(name);
+            e.Writer.Write(name ?? "");
         }
     }
 }
