@@ -2,6 +2,7 @@
 using ARPlaneServer.Events;
 using DarkRift.Server;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace ARPlaneServer.Managers {
@@ -42,15 +43,19 @@ namespace ARPlaneServer.Managers {
         }
 
         public void HandlePlayerUpdateEvent(IClient client, PlayerUpdateEvent e) {
+            if (client.ID != e.newPlayerState.id) {
+                // TODO: error
+                return;
+            }
             players[client] = e.newPlayerState;
             SendToOthers(Tag.PlayerUpdate, e, client);
         }
 
         public void SendPlayerStatesEvent(IClient client) {
-            PlayerStatesEvent spawnEvent = new PlayerStatesEvent() {
+            PlayerStatesEvent statesEvent = new PlayerStatesEvent() {
                 players = players.Values
             };
-            SendToClient(Tag.PlayerStates, spawnEvent, client);
+            SendToClient(Tag.PlayerStates, statesEvent, client);
         }
     }
 }

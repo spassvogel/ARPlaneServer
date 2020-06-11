@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ARPlaneServer {
+namespace ARPlaneServer.Classes {
     public class Vector3 : IDarkRiftSerializable {
         public float x = 0;
         public float y = 0;

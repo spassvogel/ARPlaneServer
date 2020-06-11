@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ARPlaneServer.Events {
-    class PlayerStatesEvent : NetworkEvent {
+    public class PlayerStatesEvent : NetworkEvent {
         public IEnumerable<Player> players;
 
         public override void Deserialize(DeserializeEvent e) {

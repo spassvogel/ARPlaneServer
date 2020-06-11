@@ -2,7 +2,7 @@
 using DarkRift;
 
 namespace ARPlaneServer.Events {
-    class PlayerUpdateEvent : NetworkEvent {
+    public class PlayerUpdateEvent : NetworkEvent {
         public Player newPlayerState;
 
         public override void Deserialize(DeserializeEvent e) {
