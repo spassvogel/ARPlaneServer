@@ -8,7 +8,6 @@ namespace ARPlaneServer {
     class ARPlanePlugin : Plugin {
         readonly PlayerManager playerManager;
         readonly ObjectManager objectManager;
-        readonly ARCraftManager arCraftManager;
 
         public ARPlanePlugin(PluginLoadData pluginLoadData) : base(pluginLoadData) {
             ClientManager.ClientConnected += ClientConnected;
@@ -16,7 +15,6 @@ namespace ARPlaneServer {
 
             playerManager = new PlayerManager(ClientManager);
             objectManager = new ObjectManager(ClientManager);
-            arCraftManager = new ARCraftManager(ClientManager);
         }
 
         public override bool ThreadSafe => false;
@@ -27,7 +25,6 @@ namespace ARPlaneServer {
 
             playerManager.InitializeClient(e.Client);
             objectManager.InitializeClient(e.Client);
-            arCraftManager.InitializeClient(e.Client);
 
             e.Client.MessageReceived += ClientMessageReceived;
         }
@@ -35,7 +32,6 @@ namespace ARPlaneServer {
         void ClientDisconnected(object sender, ClientDisconnectedEventArgs e) {
             Print($"Client disconnected: {e.Client.ID}");
 
-            arCraftManager.RemoveClient(e.Client);
             playerManager.RemoveClient(e.Client);
             objectManager.RemoveClient(e.Client);
         }

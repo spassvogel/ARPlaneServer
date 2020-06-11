@@ -8,7 +8,7 @@ namespace ARPlaneServer.Events {
         public IEnumerable<GameObject> objects;
 
         public override void Deserialize(DeserializeEvent e) {
-            objects = e.Reader.ReadSerializables<ARCraft>();
+            objects = e.Reader.ReadSerializables<GameObject>();
         }
 
         public override void Serialize(SerializeEvent e) {

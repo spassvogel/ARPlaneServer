@@ -1,8 +1,5 @@
 ﻿using ARPlaneServer.Classes;
 using DarkRift;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ARPlaneServer.Events {
     class PlayerDisconnectedEvent : NetworkEvent {
